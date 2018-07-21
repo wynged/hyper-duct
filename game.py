@@ -26,10 +26,6 @@ print(len(levels))
 spaces = levels[8]
 
 
-for space in spaces:
-	print(space.name)
-
-
 floorX = 30000
 floorY = 70000
 
@@ -39,9 +35,9 @@ v = int(floorY/sVal)
 
 
 
-shafts = [s for s in allSpaces if s.name == 'Shaft']
+shafts = [s for s in spaces if s.name == 'Shaft']
 print("Shafts found: ",len(shafts))
-shaft = shafts[0]
+shaft = spaces[5]#shafts[0]
 
 obstacles = [s for s in spaces if s.name == 'Conference']
 
@@ -51,15 +47,15 @@ yCoords = [i*sVal for i in range(int(v))]
 obst = containmentTest(spaces,xCoords,yCoords,sVal)
 print ('Obstacle Count',len(obst))
 
-space = spaces[5]
+space = spaces[0]
 start = shaft.centroid_ceiling
 center = space.centroid_ceiling
 
 # ------------------------------------environment-------------------------------------
 gridH, gridW = u,v
-start_pos = (4,10)#(int(int(round(start.x/sVal)*sVal)/sVal),int(int(round(start.y/sVal)*sVal)/sVal) )
+start_pos = (int(int(round(start.x/sVal)*sVal)/sVal),int(int(round(start.y/sVal)*sVal)/sVal) )
 print(start_pos)
-end_positions = [(int(int(round(center.x/sVal)*sVal)/sVal),17)]#int(int(round(center.y/sVal)*sVal)/sVal))] #[(endX[i],endY[i]) for i in range(len(endX))]
+end_positions = [(int(int(round(center.x/sVal)*sVal)/sVal),int(int(round(center.y/sVal)*sVal)/sVal))] #[(endX[i],endY[i]) for i in range(len(endX))]
 print(end_positions)
 end_rewards = [100]
 blocked_positions = obst #[(obstX[i],obstY[i]) for i in range(len(obstX))]
@@ -80,6 +76,6 @@ a.train(env,100000)
 output = a.qvalues
 
 output = a.get_path(env)
-#pyplot.plot(output)
+pyplot.plot(output)
 pyplot.show()
 print(output)
