@@ -131,11 +131,10 @@ def makeSpaceTower():
         core.color = aecColor.gray
         core.name = 'Shaft'
         spaces += [core]
-        for room in spaces: print(room.name)
         return spaces
 
 spaces = makeSpaceTower()
-#spaceDrawer = aecSpaceDrawOCC()
-#spaceDrawer.draw3D(spaces, displaySize = (1600, 900), update = True)
+spaceDrawer = aecSpaceDrawOCC()
+spaceDrawer.draw3D(spaces, displaySize = (1600, 900), update = True)
 # update = True animates the example by updating the display after every space placement.
 # About 60x slower to completion, but more interesting to watch.
