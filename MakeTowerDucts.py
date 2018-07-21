@@ -19,7 +19,7 @@ def makeTowerDucts():
     spaces = MakeSpaceTower.makeSpaceTower()
     # print(spaces)
     loads = space_cfm_calc.Space_CFM_Calc(spaces)
-    print(loads[0])
+    # print(loads[0])
     ductSpecs = minSpanningPath.GetDuctPathFromBldg(loads)
     ducts = []
     # print(ductSpecs)
