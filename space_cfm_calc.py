@@ -40,7 +40,7 @@ def Space_CFM_Calc(spaces):
         rounded_level = int(x.level)
         space_prop_dict.append({"id":x.ID,"name":x.name, "area":area_converted, "location":x.center_ceiling.xyz, "cfm":cfm, "level":rounded_level}) #get space properties
         levels.append(rounded_level)
-    #print(space_prop_dict)
+    print(space_prop_dict)
     levels_set = set(levels)    #round levels
 
 
