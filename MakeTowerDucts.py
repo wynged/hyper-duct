@@ -11,13 +11,14 @@ from aecSpace.aecShaper import aecShaper
 from aecSpace.aecPoint import aecPoint
 from aecSpace.aecSpace import aecSpace
 import pathingStrategies
+import MechSummary
+
 print("finished imports")
 
-def makeTowerDucts(stories: int = 5, mostRooms: int = 4, routing = 0, useColor=0):
+def makeTowerDucts(stories: int = 5, mostRooms: int = 4, routing = 0, useColor=1):
     model = glTF()
     spaces = MakeSpaceTower.makeSpaceTower(stories, mostRooms)
     number_of_spaces = len(spaces)
-
 
     if routing == 0:
         model = pathingStrategies.SimpleShortestPath(model, spaces, useColor)
@@ -80,11 +81,14 @@ def makeTowerDucts(stories: int = 5, mostRooms: int = 4, routing = 0, useColor=0
         if space.color.color == aecColor.yellow: color = colorYellow
         model.add_triangle_mesh(spaceMesh.vertices, spaceMesh.normals, spaceMesh.indices, color)   
 
-   
+    flat_loads = [item for sublist in loads for item in sublist]
+    airinfo  = MechSummary.air(flat_loads, ductSpecs)
+    airinfo["Number of Spaces"] = number_of_spaces
+    print(airinfo)
 
     print("About to export")
     model.save_glb('model.glb')
-    return {"model": model.save_base64(), 'computed':{'Number of Spaces':number_of_spaces}}   
+    return {"model": model.save_base64(), 'computed':airinfo}   
 
-makeTowerDucts(stories = randint(5, 30), mostRooms = randint(2, 8), routing = 1 )
+makeTowerDucts(stories = randint(5, 30), mostRooms = randint(2, 8), routing = 0 )
 

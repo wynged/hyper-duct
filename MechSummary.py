@@ -44,7 +44,22 @@ def air(spaces, ductSpecs):
     print("Total Floor Area (sq. ft.): ",str(round(math.ceil(totalarea),2)))
     bldgcfmsqft = totalair/totalarea
     print("Bldg CFM/Sq. Ft: ",str(round(bldgcfmsqft,2)))
-    return (totalair,totalarea,bldgcfmsqft)
+    
+    chillerton=totalair/400
+    boilerhp=totalarea/1000
+    infoDict = { "Duct Poundage (lbs.) ":str(math.ceil(sum(ductpounds))) ,
+                "Duct Cost ($) ": str(math.ceil(sum(ductpounds)*3)),
+                "Total Air (cfm) ":str(math.ceil(totalair)),
+                "Shaft Size (ftxft) ": str(round(shaftdim, 2))+"x"+str(round(shaftdim,2)),
+                "Total Floor Area (sq. ft.) ":str(round(math.ceil(totalarea),2)),
+                "Bldg CFM/Sq. Ft ":str(round(bldgcfmsqft,2)),
+                "Chiller Size (tons) ":str(round(chillerton, 2)),
+                "Chiller Cost ($) ": str(round(chillerton*660,0)),
+                "Boiler HP": boilerhp,
+                "Boiler Cost ($)": str(boilerhp*375)
+                }
+    return infoDict
+    #return (totalair,totalarea,bldgcfmsqft)
 
     #chiller
 def chiller(supplyair):
