@@ -43,10 +43,10 @@ def AddSizesToRoute(span, zOffset):
             ed = 1
         h = math.floor(ed)
         w = math.ceil(ductSizing.calcSecondDimension(ed, h))
-        print("before: ", edge["start"], ", ", edge["end"])
+        # print("before: ", edge["start"], ", ", edge["end"])
         edge["start"][2] = edge["start"][2] + (zOffset)*25.4
         edge["end"][2] = edge["end"][2] + (zOffset)*25.4
-        print("after: ", edge["start"], ", ", edge["end"])
+        # print("after: ", edge["start"], ", ", edge["end"])
         edge["width"] =  w  * 25.4
         edge["height"] =  h * 25.4
 

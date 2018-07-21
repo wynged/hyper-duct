@@ -19,6 +19,10 @@ from aecSpace.aecSpaceGroup import aecSpaceGroup
 from aecSpace.aecSpacer import aecSpacer
 from aecSpace.aecSpaceDrawOCC import aecSpaceDrawOCC
 
+
+
+
+
 def makeTowerDucts(stories: int = 5, mostRooms: int = 4, routing = 0, useColor=0):
     model = glTF()
     spaces = MakeSpaceTower.makeSpaceTower(stories, mostRooms)
