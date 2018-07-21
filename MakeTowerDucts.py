@@ -28,6 +28,7 @@ from aecSpace.aecSpaceDrawOCC import aecSpaceDrawOCC
 def makeTowerDucts(stories: int = 5, mostRooms: int = 4, routing = 0, useColor=0):
     model = glTF()
     spaces = MakeSpaceTower.makeSpaceTower(stories, mostRooms)
+    number_of_spaces = len(spaces)
 
     alpha = 0.2
     reflect = 0.1
@@ -100,13 +101,9 @@ def makeTowerDucts(stories: int = 5, mostRooms: int = 4, routing = 0, useColor=0
         else:
             model.add_triangle_mesh(ductMesh.vertices, ductMesh.normals, ductMesh.indices, colorGray)   
 
-#   return {"model": model.save_base64()}   
-    model.save_glb('model.glb')
+   return {"model": model.save_base64(), 'computed':{'Number of Spaces':number_of_spaces}}   
+   # model.save_glb('model.glb')
 
-makeTowerDucts(stories = randint(5, 30), mostRooms = randint(2, 8), routing = randint(0, 1))
+# makeTowerDucts(stories = randint(5, 30), mostRooms = randint(2, 8), routing = randint(0, 1))
 
-#spaceDrawer = aecSpaceDrawOCC()
-#spaceDrawer.draw3D(spaces, displaySize = (1600, 900), update = True)
-# update = True animates the example by updating the display after every space placement.
-# About 60x slower to completion, but more interesting to watch.
 
