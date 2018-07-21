@@ -2,8 +2,11 @@ import environment
 import agent
 import MakeSpaceTower as tower
 from itertools import groupby
-from matplotlib import pyplot
+#from matplotlib import pyplot
 
+
+
+print("impots in qLayout")
 
 def containmentTest(spaces, xCoords, yCoords,sVal):
 	obst = []
