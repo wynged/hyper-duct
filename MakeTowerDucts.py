@@ -60,7 +60,7 @@ def makeTowerDucts(stories: int = 5, mostRooms: int = 4, routing = 0, useColor=0
     mech.color = aecColor.gray
     mech.level = ((stories - 1) * 3500) + 11000
     mech.height = 4000
-    spaces += [mech]    
+    spaces += [mech]   
     
     for space in spaces:
         spaceMesh = space.mesh_graphic
