@@ -78,19 +78,18 @@ def AddSizesToRoute(span):
 rootnode = 3
 loadVar = 'cfm'
 
-def EdgesToDicts(G):
+def EdgesToDict(G):
     myducts = []
     for e in G.edges:
         myducts.append(G[e[0]][e[1]])
+
     return myducts
+
 
 def GetDuctPathFromBldg():
     spanningTree = GetRoutes(bldg[0])
     spanWithLoads = AddCFMToRoute(bldg[0], spanningTree, rootnode)
     spanWithSize = AddSizesToRoute(spanWithLoads)
-
-    return EdgesToDicts(spanWithSize)
+    return EdgesToDict(spanWithSize)
     
-        
-
 ducts = GetDuctPathFromBldg()
