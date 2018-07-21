@@ -36,6 +36,7 @@ def Space_CFM_Calc(spaces):
         area_converted = x.area*0.00001076391   #concert mm^2 to ft^2
         cfm = area_converted * cfmpersqft   #get cfm from cfm/sqft
         cfm = round(cfm, -1)    #round up cfm by 10
+        print("calced CFM: ", cfm)
         rounded_level = int(x.level)
         space_prop_dict.append({"id":x.ID,"name":x.name, "area":area_converted, "location":x.center_ceiling.xyz, "cfm":cfm, "level":rounded_level}) #get space properties
         levels.append(rounded_level)
