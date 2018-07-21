@@ -1,9 +1,9 @@
 import sys
 EPSILON = sys.float_info.epsilon  # smallest possible difference
 
-colors = [(0, 0, 255), (255, 0, 0)]  # [BLUE, GREEN, RED]
 
-def convert_to_rgb(minval, maxval, val, colors):
+def convert_to_rgb(minval, maxval, val):
+    colors = [(255, 0, 0), (0, 0, 255)]  # [BLUE, GREEN, RED]
     fi = float(val-minval) / float(maxval-minval) * (len(colors)-1)
     i = int(fi)
     f = fi - i
