@@ -48,8 +48,19 @@ def makeTowerDucts(stories: int = 5, mostRooms: int = 4, routing = 0, useColor=0
     stack = aecSpace()
     stack.boundary = shaper.makeBox(point, 4000, 3000)
     stack.color = aecColor.gray
-    stack.height = ((stories - 1) * 3500) + 12000
+    stack.level = 8500
+    stack.height = ((stories - 2) * 3500) + 8000
     spaces += [stack]
+    
+    xCoord = 10000
+    yCoord = 65000
+    point = aecPoint(xCoord, yCoord, 0)
+    mech = aecSpace()
+    mech.boundary = shaper.makeBox(point, 10000, 15000)
+    mech.color = aecColor.gray
+    mech.level = ((stories - 1) * 3500) + 11000
+    mech.height = 4000
+    spaces += [mech]    
     
     for space in spaces:
         spaceMesh = space.mesh_graphic
