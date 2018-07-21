@@ -56,7 +56,7 @@ def AddCFMToRoute(lvl, span):
         return span
     for n in range(0,len(lvl)):
         destSpace = lvl[n]
-        # print("DestSpace: ", destSpace)
+        
         if(n==shaftNode):
             continue 
         pth = next(nx.shortest_simple_paths(span, source=lvl[shaftNode]['id'], target=destSpace['id']))
@@ -81,8 +81,8 @@ def AddSizesToRoute(span):
             ed = 1
         h = math.floor(ed)
         w = math.ceil(ductSizing.calcSecondDimension(ed, h))
-        edge["width"] = 500 # w * 25.4
-        edge["height"] = 500 # h * 25.4
+        edge["width"] =  w * 25.4
+        edge["height"] =  h * 25.4
 
     return span
 

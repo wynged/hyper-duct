@@ -73,14 +73,19 @@ class BaseAgent:
 			if done == True:    
 				env.reset_state()
 				state = env.get_state()
+				
 				continue
+		print("Agent Trained...")
 		return
 
 	def get_path(self, env):
 		env.reset_state()
 		path = []
 		done = False
-		while(not done):
+		i = 0
+
+		while(not done and i <100):
+			i+=1
 			path.append(env.position)
 			state = env.get_state()
 			possible_actions = env.get_possible_actions()
