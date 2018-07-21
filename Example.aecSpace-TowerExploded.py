@@ -77,27 +77,28 @@ y = 0
 z = 0
 rows = 1
 columns = 1
-stories = 20
+stories = 9
 mostRooms = 8
 spaces = []
 vector = [0, 0, 0]
 xOffset = 100000
 yOffset = 90000
-zOffset = 3500
+zOffset = 30000
 
 while y < rows:
     while x < columns:
-        rotate = 0
+        rotate = randint(-20, 20)
         while z < stories:
             spcGroup = aecSpaceGroup()
-            offset = 0            
+            if abs(rotate) > 10: offset = randint(-8000, 8000)
+            else: offset = randint(-15000, 15000)            
             if z == 0: southRooms = 0
             else: southRooms = randint(1, 2)
             shell = makeFloor(offset = offset,
                               rotation = rotate,
                               roomsSouth = southRooms, 
                               roomsEast = randint(1, mostRooms), 
-                              roomsNorth = 1, 
+                              roomsNorth = randint(1, 2), 
                               roomsWest= randint(1, mostRooms),
                               roomsNorthSize = randint(8000, 15000),
                               roomsSouthSize = randint(8000, 15000))
