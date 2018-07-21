@@ -4,3 +4,4 @@
 *.pyc
 *.pyc
 /.vs/slnx.sqlite
+.vs/
