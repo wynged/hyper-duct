@@ -78,8 +78,6 @@ def makeSpaceTower(stories: int = 5, mostRooms: int = 4):
     z = 0
     rows = 1
     columns = 1
-    stories = 20
-    mostRooms = 8
     spaces = []
     vector = [0, 0, 0]
     xOffset = 100000

@@ -21,17 +21,36 @@ def makeTowerDucts(stories: int = 5, mostRooms: int = 4, routing = 0, useColor=0
     model = glTF()
     spaces = MakeSpaceTower.makeSpaceTower(stories, mostRooms)
 
-
-    colorAqua = model.add_material(0.302, 0.722, 0.392, 0.3, 0.2, "Aqua")
-    colorBlue = model.add_material(0.0, 0.631, 0.945, 0.3, 0.2, "Blue")
-    colorCyan = model.add_material(0.275, 0.941, 0.941, 0.3, 0.2, "Cyan")
-    colorGranite = model.add_material(0.235, 0.235, 0.235, 0.3, 0.2, "Gray")
+    alpha = 0.2
+    reflect = 0.1
+    colorAqua = model.add_material(0.302, 0.722, 0.392, alpha, reflect, "Aqua")
+    colorBlue = model.add_material(0.0, 0.631, 0.945, alpha, reflect, "Blue")
+    colorCyan = model.add_material(0.275, 0.941, 0.941, alpha, reflect, "Cyan")
+    colorGranite = model.add_material(0.235, 0.235, 0.235, alpha, reflect, "Gray")
     colorGray = model.add_material(0.5, 0.5, 0.5, 1.0, 0.2, "Gray")
-    colorGreen = model.add_material(0.486, 0.733, 0.0, 0.3, 0.2, "Green")
-    colorOrange = model.add_material(0.964, 0.325, 0.078, 0.3, 0.2, "Orange")
-    colorSand = model.add_material(1.0, 0.843, 0.376, 0.3, 0.2, "Sand") 
-    colorTeal = model.add_material(0.0, 0.502, 0.502, 0.3, 0.2, "Teal")  
-    colorYellow = model.add_material(1.0, 0.733, 0.0, 0.3, 0.2, "Yellow")
+    colorGreen = model.add_material(0.486, 0.733, 0.0, alpha, reflect, "Green")
+    colorOrange = model.add_material(0.964, 0.325, 0.078, alpha, reflect, "Orange")
+    colorSand = model.add_material(1.0, 0.843, 0.376, alpha, reflect, "Sand") 
+    colorTeal = model.add_material(0.0, 0.502, 0.502, alpha, reflect, "Teal")  
+    colorYellow = model.add_material(1.0, 0.733, 0.0, alpha, reflect, "Yellow")
+
+    loads = space_cfm_calc.Space_CFM_Calc(spaces)
+    ductSpecs = minSpanningPath.GetDuctPathFromBldg(loads)
+    mini = min([x["cfm"] for x in ductSpecs])
+    maxi = max([x["cfm"] for x in ductSpecs])
+    numcolors = 12
+    hmColors = []
+
+    xCoord = 13000
+    yCoord = 74000
+    point = aecPoint(xCoord, yCoord, 0)
+    shaper = aecShaper()
+    stack = aecSpace()
+    stack.boundary = shaper.makeBox(point, 4000, 3000)
+    stack.color = aecColor.gray
+    stack.height = ((stories - 1) * 3500) + 12000
+    spaces += [stack]
+    
     for space in spaces:
         spaceMesh = space.mesh_graphic
         if space.color.color == aecColor.aqua: color = colorAqua
@@ -45,19 +64,11 @@ def makeTowerDucts(stories: int = 5, mostRooms: int = 4, routing = 0, useColor=0
         if space.color.color == aecColor.teal: color = colorTeal
         if space.color.color == aecColor.yellow: color = colorYellow
         model.add_triangle_mesh(spaceMesh.vertices, spaceMesh.normals, spaceMesh.indices, color)   
-    
-    loads = space_cfm_calc.Space_CFM_Calc(spaces)
-    ductSpecs = minSpanningPath.GetDuctPathFromBldg(loads)
-    # ducts = []
-    mini = min([x["cfm"] for x in ductSpecs])
-    maxi = max([x["cfm"] for x in ductSpecs])
-    numcolors = 12
-    hmColors = []
 
     for i in range(numcolors):
         dI = i * (maxi-mini)/numcolors
         r,g,b = heatmap.convert_to_rgb(mini, maxi, dI)
-        hmColors.append(model.add_material(r/255,g/255,b/255,1.0,0.2,"HM"+str(i)))
+        hmColors.append(model.add_material(r/255,g/255,b/255,1.0,1.0,"HM"+str(i)))
     for ductSpec in ductSpecs:
         start = aecPoint(ductSpec['start'][0], ductSpec['start'][1], ductSpec['start'][2])
         end = aecPoint(ductSpec['end'][0], ductSpec['end'][1], ductSpec['end'][2])
