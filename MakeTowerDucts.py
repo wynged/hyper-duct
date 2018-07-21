@@ -5,7 +5,9 @@ sys.path.insert(0, '.\pathing')
 
 import MakeDuct
 import MakeSpaceTower
-import pathing.minSpanningPath
+import ductSizing
+
+import minSpanningPath
 import space_cfm_calc
 import math
 import heatmap
@@ -41,7 +43,7 @@ def makeTowerDucts(stories: int = 5, mostRooms: int = 4, routing = 0, useColor=0
     colorYellow = model.add_material(1.0, 0.733, 0.0, alpha, reflect, "Yellow")
 
     loads = space_cfm_calc.Space_CFM_Calc(spaces)
-    ductSpecs = pathing.minSpanningPath.GetDuctPathFromBldg(loads)
+    ductSpecs = minSpanningPath.GetDuctPathFromBldg(loads)
     mini = min([x["cfm"] for x in ductSpecs])
     maxi = max([x["cfm"] for x in ductSpecs])
     numcolors = 12
@@ -87,7 +89,7 @@ def makeTowerDucts(stories: int = 5, mostRooms: int = 4, routing = 0, useColor=0
         r,g,b = heatmap.convert_to_rgb(mini, maxi, dI)
         hmColors.append(model.add_material(r/255,g/255,b/255,1.0,1.0,"HM"+str(i)))
     for ductSpec in ductSpecs:
-        # print(ductSpec)
+        print(ductSpec)
         start = aecPoint(ductSpec['start'][0], ductSpec['start'][1], ductSpec['start'][2])
         end = aecPoint(ductSpec['end'][0], ductSpec['end'][1], ductSpec['end'][2])
         chosenColor = math.floor(12-ductSpec['cfm'] / (maxi-mini) * 12 )
