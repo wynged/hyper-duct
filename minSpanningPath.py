@@ -8,19 +8,19 @@ import math
 bldg = [
    [
     { "name": "Space-101",
-    "location": [1.2, 3.0, 1.0],
+    "location": [10, 20, 10],
     "cfm": 100,
     },
     { "name": "Space-102",
-    "location": [2, 5.0, 1.0],
+    "location": [20, 30, 10],
     "cfm": 200,
      },
     { "name": "Space-103",
-    "location": [4, 1.0, 1.0],
+    "location": [30, 40, 10],
     "cfm": 250,
      },
     { "name": "Space-106",
-    "location": [6, 3.0, 1.0],
+    "location": [40, 50, 10],
     "cfm": 350,
      },
    ]
@@ -92,4 +92,4 @@ def GetDuctPathFromBldg():
     spanWithSize = AddSizesToRoute(spanWithLoads)
     return EdgesToDict(spanWithSize)
     
-ducts = GetDuctPathFromBldg()
+# ducts = GetDuctPathFromBldg()
