@@ -79,7 +79,7 @@ class Environment(object):
 		
 		if action >= self.action_space:
 			return
-
+			
 		if action == 0:
 			proposed = (self.position[0] +1, self.position[1])
 			

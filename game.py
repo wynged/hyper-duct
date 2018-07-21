@@ -5,7 +5,6 @@ from itertools import groupby
 from matplotlib import pyplot
 
 
-
 def containmentTest(spaces, xCoords, yCoords,sVal):
 	obst = []
 	for i in range(len(xCoords)):

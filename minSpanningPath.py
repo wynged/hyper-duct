@@ -35,8 +35,8 @@ def GetRoutes(aLevel):
         dist = Point(i[0], i[1]).distance(Point(j[0], j[1]))
         # print(dist)
         if(dist > 0):
-            if __name__ == "__main__":
-                print(sp1, sp2)
+#            if __name__ == "__main__":
+#                print(sp1, sp2)
             G.add_edge(sp1['id'],sp2['id'] , weight=dist, start=list(i), end=list(j))
     # print(G)
     span = nx.minimum_spanning_tree(G)
