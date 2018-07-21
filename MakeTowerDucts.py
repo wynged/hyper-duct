@@ -4,11 +4,8 @@ import MakeDuct
 import MakeSpaceTower
 import ductSizing
 import minSpanningPath
-<<<<<<< HEAD
 import space_cfm_calc
-=======
 from hypar import glTF
->>>>>>> d260374c6da0ed92045e8a07842cd2d8f51f7964
 from aecSpace.aecColor import aecColor
 from aecSpace.aecFloor import aecFloor
 from aecSpace.aecShaper import aecShaper
@@ -20,14 +17,10 @@ from aecSpace.aecSpaceDrawOCC import aecSpaceDrawOCC
 
 def makeTowerDucts():
     spaces = MakeSpaceTower.makeSpaceTower()
-<<<<<<< HEAD
     # print(spaces)
     loads = space_cfm_calc.Space_CFM_Calc(spaces)
     print(loads[0])
     ductSpecs = minSpanningPath.GetDuctPathFromBldg(loads[0])
-=======
-    ductSpecs = minSpanningPath.GetDuctPathFromBldg()
->>>>>>> d260374c6da0ed92045e8a07842cd2d8f51f7964
     ducts = []
     print(ductSpecs)
     for ductSpec in ductSpecs:
@@ -36,13 +29,6 @@ def makeTowerDucts():
         end = aecPoint(ductSpec['end'][0], ductSpec['end'][1], ductSpec['end'][2])
         ducts += [MakeDuct.makeDuct(start, end, ductSpec['width'], ductSpec['height'])]
     if len(ducts) == 1: ducts = [ducts]
-<<<<<<< HEAD
-    return ducts
-    
-ducts = makeTowerDucts()
-# spaceDrawer = aecSpaceDrawOCC()
-# spaceDrawer.draw3D(spaces, displaySize = (1600, 900), update = True)
-=======
 
     model = glTF()
     colorAqua = model.add_material(0.302, 0.722, 0.392, 0.1, 0.2, "Aqua)
@@ -68,7 +54,6 @@ makeTowerDucts()
 #spaces = makeTowerDucts()
 #spaceDrawer = aecSpaceDrawOCC()
 #spaceDrawer.draw3D(spaces, displaySize = (1600, 900), update = True)
->>>>>>> d260374c6da0ed92045e8a07842cd2d8f51f7964
 # update = True animates the example by updating the display after every space placement.
 # About 60x slower to completion, but more interesting to watch.
 

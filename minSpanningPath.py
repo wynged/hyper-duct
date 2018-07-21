@@ -33,20 +33,12 @@ def GetRoutes(aLevel):
     for sp1,sp2 in combinations(aLevel, 2):
         i,j = tuple(sp1['location']), tuple(sp2['location'])
         dist = Point(i[0], i[1]).distance(Point(j[0], j[1]))
-<<<<<<< HEAD
         # print(dist)
         if(dist > 0):
             if __name__ == "__main__":
                 print(sp1, sp2)
             G.add_edge(sp1['id'],sp2['id'] , weight=dist, start=list(i), end=list(j))
     # print(G)
-=======
-#        print(dist)
-        if(dist > 0):
-#            print(sp1, sp2)
-            G.add_edge(sp1['name'],sp2['name'] , weight=dist, start=list(i), end=list(j))
-#    print(G)
->>>>>>> d260374c6da0ed92045e8a07842cd2d8f51f7964
     span = nx.minimum_spanning_tree(G)
     return span
     
