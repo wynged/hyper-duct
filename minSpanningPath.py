@@ -33,11 +33,11 @@ def GetRoutes(aLevel):
     for sp1,sp2 in combinations(aLevel, 2):
         i,j = tuple(sp1['location']), tuple(sp2['location'])
         dist = Point(i[0], i[1]).distance(Point(j[0], j[1]))
-        print(dist)
+#        print(dist)
         if(dist > 0):
-            print(sp1, sp2)
+#            print(sp1, sp2)
             G.add_edge(sp1['name'],sp2['name'] , weight=dist, start=list(i), end=list(j))
-    print(G)
+#    print(G)
     span = nx.minimum_spanning_tree(G)
     return span
     
@@ -62,7 +62,7 @@ def AddCFMToRoute(lvl, span, rootnode):
 
 def AddSizesToRoute(span):
     for e in span.edges:
-        print(e)
+        # print(e)
         edge = span[e[0]][e[1]]
         cfm = edge['cfm']
         ed = ductSizing.calcEDofPDandFlow(cfm, 0.08)

@@ -1,4 +1,4 @@
-import traceback
+ import traceback
 
 from aecSpace.aecCorridor import aecCorridor
 from aecSpace.aecGeometry import aecGeometry
