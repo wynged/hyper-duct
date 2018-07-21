@@ -24,7 +24,8 @@ def Space_CFM_Calc(spaces):
         "Kitchen":3,
         "Incubator":2.5,
         "Elevator lobby":1.25,
-        "":0
+        "":0,
+        "Corridor":0.5
     }
 
     #get name, area, ceiling point location, calculate airflow
@@ -36,7 +37,7 @@ def Space_CFM_Calc(spaces):
         cfm = area_converted * cfmpersqft   #get cfm from cfm/sqft
         cfm = round(cfm, -1)    #round up cfm by 10
         rounded_level = int(x.level)
-        space_prop_dict.append({"id":x.ID,"name":x.name, "area":area_converted, "location":x.center_ceiling.xy, "cfm":cfm, "level":rounded_level}) #get space properties
+        space_prop_dict.append({"id":x.ID,"name":x.name, "area":area_converted, "location":x.center_ceiling.xyz, "cfm":cfm, "level":rounded_level}) #get space properties
         levels.append(rounded_level)
     #print(space_prop_dict)
     levels_set = set(levels)    #round levels
@@ -46,7 +47,7 @@ def Space_CFM_Calc(spaces):
     del space_prop_dict[-1]
     shaft_xy = shaft_space.get("location")
     for x in levels_set:
-        space_prop_dict.append({"id":"Shaft"+str(x),"name":"Shaft", "area":"", "location":shaft_xy, "cfm":"", "level":x})
+        space_prop_dict.append({"id":"Shaft"+str(x),"name":"Shaft", "area":0.5, "location":shaft_xy, "cfm":0.5, "level":x})
 
 
     #group spaces by level

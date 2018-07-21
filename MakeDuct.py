@@ -28,7 +28,7 @@ def makeDuct(start: aecPoint, end: aecPoint, width: float, height: float) -> aec
     return duct
     
    
-#def makeDuctTest():
+# def makeDuctTest():
 #    start = aecPoint(20, 50, 10)
 #    end = aecPoint(60, 30, 10)
 #    width = 5

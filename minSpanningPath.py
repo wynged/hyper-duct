@@ -5,7 +5,7 @@ import ductSizing
 
 import math
 
-bldg = [
+tstbldg = [
    [
     { "name": "Space-101",
     "location": [10, 20, 10],
@@ -33,24 +33,34 @@ def GetRoutes(aLevel):
     for sp1,sp2 in combinations(aLevel, 2):
         i,j = tuple(sp1['location']), tuple(sp2['location'])
         dist = Point(i[0], i[1]).distance(Point(j[0], j[1]))
-#        print(dist)
+        # print(dist)
         if(dist > 0):
-#            print(sp1, sp2)
-            G.add_edge(sp1['name'],sp2['name'] , weight=dist, start=list(i), end=list(j))
-#    print(G)
+            if __name__ == "__main__":
+                print(sp1, sp2)
+            G.add_edge(sp1['id'],sp2['id'] , weight=dist, start=list(i), end=list(j))
+    # print(G)
     span = nx.minimum_spanning_tree(G)
     return span
     
 
 #this adds the load for each point along all edges in the path
-def AddCFMToRoute(lvl, span, rootnode):
+def AddCFMToRoute(lvl, span):
+    # print("Level Info:", lvl)
+    shafts = [s for s in lvl if s["name"] == "Shaft"]
+    # print("Shafts: ", shafts)
+    shaftNode = -1
+    if len(shafts)>0:
+        # print ("found shaft node")
+        shaftNode = lvl.index(shafts[0])
+    else:
+        return span
     for n in range(0,len(lvl)):
         destSpace = lvl[n]
-        # print(destSpace['name'])
-        if(n==rootnode):
-            continue
-        pth = next(nx.shortest_simple_paths(span, source=lvl[rootnode]['name'], target=destSpace['name']))
-        
+        # print("DestSpace: ", destSpace)
+        if(n==shaftNode):
+            continue 
+        pth = next(nx.shortest_simple_paths(span, source=lvl[shaftNode]['id'], target=destSpace['id']))
+        # print('found path')
         for i in range(1,len(pth)):
             # print("i: ", i)
             if loadVar not in span[pth[i-1]][pth[i]]:
@@ -65,17 +75,20 @@ def AddSizesToRoute(span):
         # print(e)
         edge = span[e[0]][e[1]]
         cfm = edge['cfm']
-        ed = ductSizing.calcEDofPDandFlow(cfm, 0.08)
+        if cfm > 0:
+            ed = ductSizing.calcEDofPDandFlow(cfm, 0.08)
+        else:
+            ed = 1
         h = math.floor(ed)
         w = math.ceil(ductSizing.calcSecondDimension(ed, h))
-        edge["width"] = w
-        edge["height"] = h
+        edge["width"] = w * 25.4
+        edge["height"] = h * 25.4
         
 
 
     return span
 
-rootnode = 3
+# shaftnode = 0
 loadVar = 'cfm'
 
 def EdgesToDict(G):
@@ -85,10 +98,10 @@ def EdgesToDict(G):
 
     return myducts
 
-
-def GetDuctPathFromBldg():
-    spanningTree = GetRoutes(bldg[0])
-    spanWithLoads = AddCFMToRoute(bldg[0], spanningTree, rootnode)
+def GetDuctPathFromBldg(bldg):
+    spanningTree = GetRoutes(bldg)
+    # print("SpanningTree:", spanningTree)
+    spanWithLoads = AddCFMToRoute(bldg, spanningTree)
     spanWithSize = AddSizesToRoute(spanWithLoads)
     return EdgesToDict(spanWithSize)
     
