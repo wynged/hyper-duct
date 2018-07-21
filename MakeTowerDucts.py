@@ -91,5 +91,5 @@ def makeTowerDucts(stories: int = 5, mostRooms: int = 4, routing = 0, useColor=0
     return {"model": model.save_base64(), 'computed':{'Number of Spaces':number_of_spaces}}   
 #    model.save_glb('model.glb')
 
-# makeTowerDucts(stories = randint(5, 30), mostRooms = randint(2, 8), routing = randint(0, 1))
+#makeTowerDucts(stories = randint(5, 30), mostRooms = randint(2, 8), routing = randint(0, 1))
 
