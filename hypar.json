@@ -29,8 +29,6 @@
     }
   },
   "respository_url": "https://github.com/wynged/hyper-duct",
-  "returns": {
-
-  }
+  "returns": {},
   "version": "0.1"
 }
