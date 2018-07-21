@@ -19,8 +19,8 @@ def makeTowerDucts():
     spaces = MakeSpaceTower.makeSpaceTower()
     # print(spaces)
     loads = space_cfm_calc.Space_CFM_Calc(spaces)
-    # print(loads[0])
-    ductSpecs = minSpanningPath.GetDuctPathFromBldg(loads[0])
+    print(loads[0])
+    ductSpecs = minSpanningPath.GetDuctPathFromBldg(loads)
     ducts = []
     # print(ductSpecs)
     for ductSpec in ductSpecs:
@@ -53,7 +53,15 @@ def makeTowerDucts():
         if space.color.color == aecColor.teal: color = colorTeal
         if space.color.color == aecColor.yellow: color = colorYellow
         model.add_triangle_mesh(spaceMesh.vertices, spaceMesh.normals, spaceMesh.indices, color)   
-#    return {"model": model.save_base64(), 'computed':{'floors':levels, 'area':area}}   
+    for duct in ducts:
+        ductMesh = duct.mesh_graphic
+        colorIndex = randint(0,3)
+        if colorIndex == 0: color = colorBlue
+        if colorIndex == 1: color = colorOrange
+        if colorIndex == 2: color = colorGray
+        if colorIndex == 3: color = colorYellow      
+        model.add_triangle_mesh(ductMesh.vertices, ductMesh.normals, ductMesh.indices, color)   
+#   return {"model": model.save_base64(), 'computed':{'floors':levels, 'area':area}}   
     model.save_glb('model.glb')
 
 makeTowerDucts()

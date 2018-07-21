@@ -81,10 +81,8 @@ def AddSizesToRoute(span):
             ed = 1
         h = math.floor(ed)
         w = math.ceil(ductSizing.calcSecondDimension(ed, h))
-        edge["width"] = w * 25.4
-        edge["height"] = h * 25.4
-        
-
+        edge["width"] = 500 # w * 25.4
+        edge["height"] = 500 # h * 25.4
 
     return span
 
@@ -99,10 +97,14 @@ def EdgesToDict(G):
     return myducts
 
 def GetDuctPathFromBldg(bldg):
-    spanningTree = GetRoutes(bldg)
-    # print("SpanningTree:", spanningTree)
-    spanWithLoads = AddCFMToRoute(bldg, spanningTree)
-    spanWithSize = AddSizesToRoute(spanWithLoads)
-    return EdgesToDict(spanWithSize)
+    allDucts = []
+    for lvl in bldg:
+        spanningTree = GetRoutes(lvl)
+        # print("SpanningTree:", spanningTree)
+        spanWithLoads = AddCFMToRoute(lvl, spanningTree)
+        spanWithSize = AddSizesToRoute(spanWithLoads)
+        allDucts.extend( EdgesToDict(spanWithSize) )
+
+    return allDucts
     
 # ducts = GetDuctPathFromBldg()
