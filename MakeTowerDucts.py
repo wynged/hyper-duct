@@ -31,7 +31,7 @@ def makeTowerDucts():
     if len(ducts) == 1: ducts = [ducts]
 
     model = glTF()
-    colorAqua = model.add_material(0.302, 0.722, 0.392, 0.1, 0.2, "Aqua)
+    colorAqua = model.add_material(0.302, 0.722, 0.392, 0.1, 0.2, "Aqua")
     colorBlue = model.add_material(0.0, 0.631, 0.945, 0.1, 0.2, "Blue")
     colorCyan = model.add_material(0.275, 0.941, 0.941, 0.1, 0.2, "Cyan")
     colorGray = model.add_material(0.5, 0.5, 0.5, 0.1, 0.2, "Gray")
@@ -44,11 +44,11 @@ def makeTowerDucts():
         colorIndex = randint(0, 3)
         if colorIndex == 0: color = colorBlue
         if colorIndex == 1: color = colorOrange
-        if colorIndex == 2: color = colorPurple
+        if colorIndex == 2: color = colorGray
         if colorIndex == 3: color = colorYellow      
         model.add_triangle_mesh(spaceMesh.vertices, spaceMesh.normals, spaceMesh.indices, color)   
 #    return {"model": model.save_base64(), 'computed':{'floors':levels, 'area':area}}   
-    model.save_glb('C:\\Users\\aahau\\Dropbox\\Business\\Hypar\\Development\\GitHub\\hyper-duct\\model.glb')
+    model.save_glb('model.glb')
 
 makeTowerDucts()
 #spaces = makeTowerDucts()
