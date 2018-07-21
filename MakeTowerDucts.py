@@ -98,7 +98,7 @@ def makeTowerDucts(stories: int = 5, mostRooms: int = 4, routing = 0, useColor=0
         else:
             model.add_triangle_mesh(ductMesh.vertices, ductMesh.normals, ductMesh.indices, colorGray)   
 
-   return {"model": model.save_base64(), 'computed':{'Number of Spaces':number_of_spaces}}   
+    return {"model": model.save_base64(), 'computed':{'Number of Spaces':number_of_spaces}}   
    # model.save_glb('model.glb')
 
 # makeTowerDucts(stories = randint(5, 30), mostRooms = randint(2, 8), routing = randint(0, 1))
