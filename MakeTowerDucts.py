@@ -98,7 +98,6 @@ def makeTowerDucts(stories: int = 5, mostRooms: int = 4, routing = 0, useColor=0
    # model.save_glb('model.glb')
 
 # makeTowerDucts(stories = randint(5, 30), mostRooms = randint(2, 8), routing = randint(0, 1))
-
 #spaceDrawer = aecSpaceDrawOCC()
 #spaceDrawer.draw3D(spaces, displaySize = (1600, 900), update = True)
 # update = True animates the example by updating the display after every space placement.
