@@ -15,7 +15,7 @@ class aecCorridor():
     """
     __dimensionError = "Critical corridor dimension exceeds floor boundary."
     __minPersons = 3
-    __personWidth = 570
+    __personWidth = 2
     __geometry = aecGeometry()
     __shaper = aecShaper() 
     __spacer = aecSpacer()
@@ -31,14 +31,13 @@ class aecCorridor():
         '__persons',
         '__shape',
         '__space',
-        '__width',
-        '__name'
+        '__width'
     ]   
     
     def __init__(self, corridor: int = 1,
                        origin: aecPoint = aecPoint(),
-                       xSize: float = 1700, 
-                       ySize: float = 1700, 
+                       xSize: float = 5, 
+                       ySize: float = 5, 
                        persons: int = 3):
         """
         Constructor       
@@ -53,7 +52,6 @@ class aecCorridor():
             persons -= self.__minPersons
             self.__width += (persons * self.__personWidth)
         self.__space = aecSpace()
-        self.__name = "defaultCorridor"
 
     @property
     def persons(self) -> int:
@@ -69,7 +67,7 @@ class aecCorridor():
             return None
         
     @persons.setter
-    def persons(self, value: int = 3):
+    def persons(self, value: int = 3) -> int:
         """
         Sets the capacity of the corridor as the quantity of 
         persons who can pass along its length simultaneously.
@@ -106,28 +104,7 @@ class aecCorridor():
             return self.__width
         except Exception:
             traceback.print_exc() 
-            return None  
-
-    @property
-    def name(self) -> str:
-        """
-        Returns the Corridor Name.
-        """
-        try:
-            return self.__name
-        except Exception:
-            traceback.print_exc()
-            return None 
-
-    @name.setter
-    def name(self, value = '') -> str:
-        """
-        Sets the name.
-        """
-        try:
-            self.__name = value
-        except:
-            traceback.print_exc()
+            return None        
 
     def addLobby(self, lobby: aecSpace) -> bool:
         """
@@ -144,7 +121,7 @@ class aecCorridor():
         try:
             if (self.width * 2) >= floor.size_x or \
                 self.width >= floor.size_y: raise ValueError
-            self.space.height = floor.height- 0.25
+            self.space.height = floor.height - 0.25
             self.space.level = floor.level
             floorBox = floor.points_box
             xPnt = floorBox.SW.x + margin
@@ -283,7 +260,7 @@ class aecCorridor():
         try:
             if self.width >= floor.size_x or \
                self.width >= floor.size_y: raise ValueError
-            self.space.height = floor.height- 0.25
+            self.space.height = floor.height - 0.25
             self.space.level = floor.level
             floorBox = floor.points_box
             xPnt = floorBox.SW.x + margin

@@ -1,5 +1,7 @@
 import traceback
 
+from random import randint
+
 from aecSpace.aecCorridor import aecCorridor
 from aecSpace.aecGeometry import aecGeometry
 from aecSpace.aecPoint import aecPoint
@@ -94,8 +96,12 @@ class aecFloor():
             
             floor = self.__spacer.copy(self.floor)
             
-            # Test and perform initial rotation.
+            # Room types
             
+            roomTypes = ['Office', 'Bathroom', 'Conference', 'Kitchen', 'Incubator']
+            
+            # Test and perform initial rotation.
+                        
             rotate = 0
             if abs(rotation) <= aecGeometry.pi * 2: rotation = aecGeometry.toDegrees(rotation)
             if rotation < 0: rotate = abs(rotation)
@@ -165,6 +171,7 @@ class aecFloor():
                 room.boundary = points
                 westRooms = [room] + self.__spacer.place(room, roomsWest - 1, y = yRoom)
                 westRooms.reverse()
+                for room in westRooms: room.name = roomTypes[randint(0, 4)]
             
             # Create the Eastern rooms
                 
@@ -181,6 +188,7 @@ class aecFloor():
                 room = aecSpace()
                 room.boundary = points
                 eastRooms = [room] + self.__spacer.place(room, roomsEast - 1, y = yRoom)
+                for room in eastRooms: room.name = roomTypes[randint(0, 4)]
             
             # Create the North rooms
             
@@ -198,6 +206,7 @@ class aecFloor():
                 if not points: raise Exception
                 room = aecSpace()
                 room.boundary = points
+                room.name = 'Lobby'
                 northRooms = []
                 northRooms.append(room)
                 if roomsNorth == 2: 
@@ -223,6 +232,7 @@ class aecFloor():
                 southRooms = []
                 southRooms.append(room)
                 if roomsSouth == 2: southRooms.append(self.__spacer.copy(room, x = xRoom))
+                for room in southRooms: room.name = roomTypes[randint(0, 4)]
             
             # Create list of all rooms
             
