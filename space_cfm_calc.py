@@ -52,6 +52,30 @@ def Space_CFM_Calc(spaces):
     #print(output)
     return output
 
+# Generate a new dictionary for the RA CFM using the output of above and applying rules. 
+def Space_CFMRA_Calc(output):
+    outputRA = []
+    RA_X_offset = 5000
+    RA_Y_offset = 5000
+    for y in output:
+        #print (y)
+        outputRA.append(
+           {"id":y.get("id")+"RA",
+          "name":y.get("name"),
+          "area":y.get("area"),
+          "location":(y.get("location")[0] + RA_X_offset,y.get("location")[1] + RA_Y_offset,y.get("location")[2] + 0),
+          "cfm":y.get("cfm") * 0.85, 
+          "level":y.get("level")}
+        )
+    #print(output[2])
+    #print(outputRA[2])
+    #print(outputRA)
+    return outputRA
+
+
 if __name__ == "__main__":
     spaces = MakeSpaceTower.makeSpaceTower()
-    Space_CFM_Calc(spaces)
+    supply = Space_CFM_Calc(spaces)
+    for z in supply:
+        Space_CFMRA_Calc(z)
+
