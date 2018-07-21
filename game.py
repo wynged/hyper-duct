@@ -1,76 +1,82 @@
 import environment
 import agent
+import MakeSpaceTower as tower
+from itertools import groupby
+from matplotlib import pyplot
 
-# ------------------------------------ environment 1 -----------------------------------------
-'''
-gridH, gridW = 4, 4
-start_pos = None
-end_positions = [(0, 3), (1, 3)]
-end_rewards = [10.0, -60.0]
-blocked_positions = [(1, 1), (2, 1)]
-default_reward= -0.2
-'''
-# ------------------------------------ environment 2 -----------------------------------------
-'''
-gridH, gridW = 8, 4
-start_pos = (7, 0)
-end_positions = [(0, 0), (1, 0), (2, 0), (3, 0), (4, 0), (5, 0), (6, 0)]
-end_rewards = [10.0, -40.0, -40.0, -40.0, -40.0, -40.0, -40.0]
-blocked_positions = []
-default_reward= -0.2
-'''
-# ------------------------------------ environment 3 -----------------------------------------
-'''
-gridH, gridW = 8, 9
-start_pos = None
-end_positions = [(2, 2), (3, 5), (4, 5), (5, 5), (6, 5)]
-end_rewards = [10.0, -30.0, -30.0, -30.0, -30.0]
-blocked_positions = [(i, 1) for i in range(1, 7)]+ [(1, i) for i in range(1, 8)] + [(i, 7) for i in range(1, 7)]
-default_reward= -0.5
-'''
-# ------------------------------------ environment 4 -----------------------------------------
 
-gridH, gridW = 9, 7
-start_pos = None
-end_positions = [(0, 3), (2, 4), (6, 2)]
-end_rewards = [20.0, -50.0, -50.0]
-blocked_positions = [(2, i) for i in range(3)] + [(6, i) for i in range(4, 7)]
-default_reward = -0.1
 
-# --------------------------------------------------------------------------------------------
+def containmentTest(spaces, xCoords, yCoords,sVal):
+	obst = []
+	for i in range(len(xCoords)):
+		for space in spaces:
+			points = space.points_ceiling
+			xs = [p.x for p in points]
+			ys = [p.y for p in points]
+
+			if xCoords[i] >= min(xs) and xCoords[i] <= max(xs) and yCoords[i] >= min(ys) and yCoords[i] <= max(ys):
+				obst.append((xCoords[i]/sVal,yCoords[i]/sVal))
+	return obst
+sVal = 4000
+allSpaces = tower.makeSpaceTower()
+levels = []
+
+for key, g  in groupby(allSpaces, key = lambda x: x.level):
+	levels.append(list(g))
+print(len(levels))
+spaces = levels[8]
+
+
+floorX = 30000
+floorY = 70000
+
+
+u = int(floorX/sVal)
+v = int(floorY/sVal)
+
+
+
+shafts = [s for s in spaces if s.name == 'Shaft']
+print("Shafts found: ",len(shafts))
+shaft = spaces[5]#shafts[0]
+
+obstacles = [s for s in spaces if s.name == 'Conference']
+
+xCoords = [i*sVal for i in range(int(u))]
+yCoords = [i*sVal for i in range(int(v))]
+
+obst = containmentTest(spaces,xCoords,yCoords,sVal)
+print ('Obstacle Count',len(obst))
+
+space = spaces[0]
+start = shaft.centroid_ceiling
+center = space.centroid_ceiling
+
+# ------------------------------------environment-------------------------------------
+gridH, gridW = u,v
+start_pos = (int(int(round(start.x/sVal)*sVal)/sVal),int(int(round(start.y/sVal)*sVal)/sVal) )
+print(start_pos)
+end_positions = [(int(int(round(center.x/sVal)*sVal)/sVal),int(int(round(center.y/sVal)*sVal)/sVal))] #[(endX[i],endY[i]) for i in range(len(endX))]
+print(end_positions)
+end_rewards = [100]
+blocked_positions = obst #[(obstX[i],obstY[i]) for i in range(len(obstX))]
+default_reward = 0.0
 
 env = environment.Environment(gridH, gridW, end_positions, end_rewards, blocked_positions, start_pos, default_reward)
 
+# ---------------------------------------agent---------------------------------------------
 alpha = 0.2
-epsilon = 0.2
+epsilon = 0.5
 discount = 0.99
 action_space = env.action_space
 state_space = env.state_space
 
 a = agent.QLearningAgent(alpha, epsilon, discount, action_space, state_space)
-#agent = agent.EVSarsaAgent(alpha, epsilon, discount, action_space, state_space)
-#env.render(agent.qvalues)
-state = env.get_state()
-#print(state)
+a.train(env,100000)
 
-iteration = 0
-maxIterations = 1000
-while(iteration < maxIterations):
-	iteration +=1
-	possible_actions = env.get_possible_actions()
-	action = a.get_action(state, possible_actions)
-	next_state, reward, done = env.step(action)
-	#print a.qvalues
+output = a.qvalues
 
-	next_state_possible_actions = env.get_possible_actions()
-	a.update(state, action, reward, next_state, next_state_possible_actions, done)
-	state = next_state
-
-	if done == True:	
-		env.reset_state()
-		#print a.qvalues
-		print(a.qvalues)
-
-		state = env.get_state()
-		
-		continue
+output = a.get_path(env)
+pyplot.plot(output)
+pyplot.show()
+print(output)

@@ -7,7 +7,7 @@ from aecSpace.aecPoint import aecPoint
 from aecSpace.aecSpace import aecSpace
 from aecSpace.aecSpaceGroup import aecSpaceGroup
 from aecSpace.aecSpacer import aecSpacer
-from aecSpace.aecSpaceDrawOCC import aecSpaceDrawOCC
+#from aecSpace.aecSpaceDrawOCC import aecSpaceDrawOCC
 
 colors = \
 [
@@ -133,8 +133,9 @@ def makeSpaceTower(stories: int = 5, mostRooms: int = 4):
         spaces += [core]
         return spaces
 
-#spaces = makeSpaceTower()
-#spaceDrawer = aecSpaceDrawOCC()
-#spaceDrawer.draw3D(spaces, displaySize = (1600, 900), update = True)
-# update = True animates the example by updating the display after every space placement.
-# About 60x slower to completion, but more interesting to watch.
+if __name__ == "__main__":
+    spaces = makeSpaceTower()
+    #spaceDrawer = aecSpaceDrawOCC()
+    #spaceDrawer.draw3D(spaces, displaySize = (1600, 900), update = True)
+    # update = True animates the example by updating the display after every space placement.
+    # About 60x slower to completion, but more interesting to watch.
