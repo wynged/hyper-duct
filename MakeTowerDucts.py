@@ -1,11 +1,9 @@
 from random import randint, uniform
 
-import sys
-sys.path.insert(0, '.\pathing')
-
 import MakeDuct
 import MakeSpaceTower
-import pathing.minSpanningPath
+import ductSizing
+import minSpanningPath
 import space_cfm_calc
 import math
 import heatmap
@@ -37,7 +35,7 @@ def makeTowerDucts(stories: int = 5, mostRooms: int = 4, routing = 0, useColor=0
     colorYellow = model.add_material(1.0, 0.733, 0.0, alpha, reflect, "Yellow")
 
     loads = space_cfm_calc.Space_CFM_Calc(spaces)
-    ductSpecs = pathing.minSpanningPath.GetDuctPathFromBldg(loads)
+    ductSpecs = minSpanningPath.GetDuctPathFromBldg(loads)
     mini = min([x["cfm"] for x in ductSpecs])
     maxi = max([x["cfm"] for x in ductSpecs])
     numcolors = 12
