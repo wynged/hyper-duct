@@ -11,8 +11,6 @@ from aecSpace.aecPoint import aecPoint
 from aecSpace.aecSpace import aecSpace
 from aecSpace.aecSpaceGroup import aecSpaceGroup
 from aecSpace.aecSpacer import aecSpacer
-from aecSpace.aecSpaceDrawOCC import aecSpaceDrawOCC
-
 
 def makeDuct(start: aecPoint, end: aecPoint, width: float, height: float) -> aecSpace:
     shaper = aecShaper()
