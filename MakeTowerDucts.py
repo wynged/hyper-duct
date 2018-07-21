@@ -34,7 +34,6 @@ def makeTowerDucts(stories: int = 5, mostRooms: int = 4, routing = 0, useColor=0
     colorYellow = model.add_material(1.0, 0.733, 0.0, 0.3, 0.2, "Yellow")
     for space in spaces:
         spaceMesh = space.mesh_graphic
-
         if space.color.color == aecColor.aqua: color = colorAqua
         if space.color.color == aecColor.blue: color = colorBlue
         if space.color.color == aecColor.cyan: color = colorCyan
@@ -55,8 +54,6 @@ def makeTowerDucts(stories: int = 5, mostRooms: int = 4, routing = 0, useColor=0
     numcolors = 12
     hmColors = []
 
-    # if len(ducts) == 1: ducts = [ducts]
-
     for i in range(numcolors):
         dI = i * (maxi-mini)/numcolors
         r,g,b = heatmap.convert_to_rgb(mini, maxi, dI)
@@ -72,11 +69,11 @@ def makeTowerDucts(stories: int = 5, mostRooms: int = 4, routing = 0, useColor=0
         else:
             model.add_triangle_mesh(ductMesh.vertices, ductMesh.normals, ductMesh.indices, colorGray)   
 
-#   return {"model": model.save_base64(), 'computed':{'floors':levels, 'area':area}}   
+#   return {"model": model.save_base64()}   
     model.save_glb('model.glb')
 
 makeTowerDucts(stories = randint(5, 30), mostRooms = randint(2, 8), routing = randint(0, 1))
-#spaces = makeTowerDucts()
+
 #spaceDrawer = aecSpaceDrawOCC()
 #spaceDrawer.draw3D(spaces, displaySize = (1600, 900), update = True)
 # update = True animates the example by updating the display after every space placement.
