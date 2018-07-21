@@ -72,53 +72,69 @@ def makeFloor(offset: float = 0.0,
         shell.rooms.setHeight(10000)
     return shell
 
-x = 0
-y = 0
-z = 0
-rows = 1
-columns = 1
-stories = 9
-mostRooms = 8
-spaces = []
-vector = [0, 0, 0]
-xOffset = 100000
-yOffset = 90000
-zOffset = 30000
-
-while y < rows:
-    while x < columns:
-        rotate = randint(-20, 20)
-        while z < stories:
-            spcGroup = aecSpaceGroup()
-            if abs(rotate) > 10: offset = randint(-8000, 8000)
-            else: offset = randint(-15000, 15000)            
-            if z == 0: southRooms = 0
-            else: southRooms = randint(1, 2)
-            shell = makeFloor(offset = offset,
-                              rotation = rotate,
-                              roomsSouth = southRooms, 
-                              roomsEast = randint(1, mostRooms), 
-                              roomsNorth = randint(1, 2), 
-                              roomsWest= randint(1, mostRooms),
-                              roomsNorthSize = randint(8000, 15000),
-                              roomsSouthSize = randint(8000, 15000))
-            spcGroup.add([shell.corridor.space])
-            spcGroup.add(shell.rooms.spaces)                  
-            spcGroup.moveBy(vector[0], vector[1], vector[2])
-            vector[2] += zOffset
-            spaces += spcGroup.spaces               
-            z += 1        
-        z = 0
-        x += 1
-        vector[2] = 0
-        vector[0] += xOffset      
+def makeSpaceTower():
     x = 0
-    vector[0] = 0
-    vector[2] = 0
-    vector[1] += yOffset
-    y += 1     
+    y = 0
+    z = 0
+    rows = 1
+    columns = 1
+    stories = 20
+    mostRooms = 8
+    spaces = []
+    vector = [0, 0, 0]
+    xOffset = 100000
+    yOffset = 90000
+    zOffset = 3500
+    
+    while y < rows:
+        while x < columns:
+            rotate = 0
+            while z < stories:
+                spcGroup = aecSpaceGroup()
+                offset = 0            
+                if z == 0: 
+                    southRooms = 0
+                    zOffset = 10000
+                else:
+                    zOffset = 3500
+                    southRooms = randint(1, 2)
+                shell = makeFloor(offset = offset,
+                                  rotation = rotate,
+                                  roomsSouth = southRooms, 
+                                  roomsEast = randint(1, mostRooms), 
+                                  roomsNorth = 1, 
+                                  roomsWest= randint(1, mostRooms),
+                                  roomsNorthSize = randint(8000, 15000),
+                                  roomsSouthSize = randint(8000, 15000))
+                spcGroup.add([shell.corridor.space])
+                spcGroup.add(shell.rooms.spaces)                  
+                spcGroup.moveBy(vector[0], vector[1], vector[2])
+                vector[2] += zOffset
+                spaces += spcGroup.spaces               
+                z += 1        
+            z = 0
+            x += 1
+            vector[2] = 0
+            vector[0] += xOffset      
+        x = 0
+        vector[0] = 0
+        vector[2] = 0
+        vector[1] += yOffset
+        y += 1
+        xCoord = 10000
+        yCoord = 70000
+        point = aecPoint(xCoord, yCoord, 0)
+        core = aecSpace()
+        shaper = aecShaper()
+        core.boundary = shaper.makeBox(point, 10000, 10000)
+        core.height = ((stories - 1) * 3500) + 15000
+        core.color = aecColor.gray
+        core.name = 'Shaft'
+        spaces += [core]
+        return spaces
 
-spaceDrawer = aecSpaceDrawOCC()
-spaceDrawer.draw3D(spaces, displaySize = (1600, 900), update = True)
+#spaces = makeSpaceTower()
+#spaceDrawer = aecSpaceDrawOCC()
+#spaceDrawer.draw3D(spaces, displaySize = (1600, 900), update = True)
 # update = True animates the example by updating the display after every space placement.
 # About 60x slower to completion, but more interesting to watch.
