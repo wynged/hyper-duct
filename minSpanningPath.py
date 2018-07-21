@@ -57,7 +57,7 @@ def GetDuctPathFromBldg(bldg):
         spanningTree = GetRoutes(lvl)
         # print("SpanningTree:", spanningTree)
         spanWithLoads = CFMAndSizes.AddCFMToRoute(lvl, spanningTree)
-        spanWithSize = CFMAndSizes.AddSizesToRoute(spanWithLoads, -2)
+        spanWithSize = CFMAndSizes.AddSizesToRoute(spanWithLoads, -5)
         allDucts.extend( EdgesToDict(spanWithSize) )
 
     return allDucts
