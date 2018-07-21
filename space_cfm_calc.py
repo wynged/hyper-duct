@@ -29,12 +29,13 @@ def Space_CFM_Calc(spaces):
         rounded_level = int(x.level)
         space_prop_dict.append({"id":x.ID,"name":x.name, "area":area_converted, "location":x.center_ceiling.xyz, "cfm":cfm, "level":rounded_level}) #get space properties
         levels.append(rounded_level)
-    print(space_prop_dict)
+    #print(space_prop_dict)
     levels_set = set(levels)    #round levels
+    
 
-
-    shaft_space = space_prop_dict[-1]
-    del space_prop_dict[-1]
+    shaft_space = next(item for item in space_prop_dict if item["name"] == "Shaft")
+    shaft_index = next((index for (index, d) in enumerate(space_prop_dict) if d["name"] == "Shaft"), None)
+    del space_prop_dict[shaft_index]
     shaft_xy = shaft_space.get("location")
     for x in levels_set:
         space_prop_dict.append({"id":"Shaft"+str(x),"name":"Shaft", "area":0.5, "location":shaft_xy, "cfm":0.5, "level":x})
@@ -50,3 +51,7 @@ def Space_CFM_Calc(spaces):
         output.append(list(group))
     #print(output)
     return output
+
+if __name__ == "__main__":
+    spaces = MakeSpaceTower.makeSpaceTower()
+    Space_CFM_Calc(spaces)
