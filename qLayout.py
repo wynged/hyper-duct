@@ -2,11 +2,7 @@ import environment
 import agent
 import MakeSpaceTower as tower
 from itertools import groupby
-#from matplotlib import pyplot
 
-
-
-print("impots in qLayout")
 
 def containmentTest(spaces, xCoords, yCoords,sVal):
 	obst = []
@@ -30,13 +26,13 @@ def GetDuctPathFromBldg(building):
 
     for key, g  in groupby(allSpaces, key = lambda x: x.level):
         levels.append(list(g))
-    print(len(levels))
+    #print(len(levels))
 
 
     for lvl in range(len(levels)-1):
         spaces = levels[lvl]
-        floorX = 30000
-        floorY = 70000
+        floorX = 35000
+        floorY = 75000
         u = int(floorX/sVal)
         v = int(floorY/sVal)
         
@@ -55,7 +51,7 @@ def GetDuctPathFromBldg(building):
                 xCoords.append(j*sVal)
                 yCoords.append(i*sVal)
 
-        obst = containmentTest(spaces,xCoords,yCoords,sVal)
+        obst = containmentTest(obstacles,xCoords,yCoords,sVal)
         print ('Obstacle Count',len(obst))
 
         for space in spaces:
@@ -69,7 +65,10 @@ def GetDuctPathFromBldg(building):
             gridH, gridW = u,v
             start_pos = (int(int(round(start.x/sVal)*sVal)/sVal), 16)#int(int(round(start.y/sVal)*sVal)/sVal) )
             print(start_pos)
-            end_positions = [(int(int(round(center.x/sVal)*sVal)/sVal),int(int(round(center.y/sVal)*sVal)/sVal))] #[(endX[i],endY[i]) for i in range(len(endX))]
+            targetY = int(int(round(center.y/sVal)*sVal)/sVal)
+            if targetY > max(yCoords):
+                targetY = max(yCoords)
+            end_positions = [(int(int(round(center.x/sVal)*sVal)/sVal),targetY)] #[(endX[i],endY[i]) for i in range(len(endX))]
             print(end_positions)
             end_rewards = [100]
             blocked_positions =  obst #[(obstX[i],obstY[i]) for i in range(len(obstX))]
@@ -90,21 +89,21 @@ def GetDuctPathFromBldg(building):
 
                 qVals = a.qvalues
                 path = a.get_path(env)
-                ductspecs = []
-                for i in range(len(path)-1):
-                    start = [path[i][0],path[i][1],Z]
-                    end = [path[i][0],path[i+1][1],Z]
 
-                    ductspec = {'start':start, 'end':end, 'width': 254, 'height': 254, 'cfm':100, 'spaceName': name}
-                    ductspecs.append(ductspec)
+                if len(path)>1:
+                    for i in range(1,len(path)-2):
+                        start = [path[i][0],path[i][1],Z]
+                        end = [path[i][0],path[i+1][1],Z]
+                        ductspec = {'start':start, 'end':end, 'width': 254, 'height': 254, 'cfm':100, 'spaceName': name}
+                        output.append(ductspec)
             
             #pyplot.plot(qVals)
             #pyplot.show()
-
             #print(output)
-            output.append(ductspecs)
+    print("WTF------------------------------------------------------------")
     print([len(i) for i in output])
     return output
 
-tower = tower.makeSpaceTower()
-GetDuctPathFromBldg(tower)
+if __name__ == "__main__":
+    tower = tower.makeSpaceTower()
+    GetDuctPathFromBldg(tower)
