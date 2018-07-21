@@ -55,8 +55,38 @@ class BaseAgent:
 		return chosen_action
         
 	def get_value(self, state, possible_actions):
-		
 		pass
+	
+	def train(self, env, maxIterations = 10000):
+		state = env.get_state()
+		iteration = 0
+		while(iteration < maxIterations):
+			iteration +=1
+			possible_actions = env.get_possible_actions()
+			action = self.get_action(state, possible_actions)
+			next_state, reward, done = env.step(action)
+
+			next_state_possible_actions = env.get_possible_actions()
+			self.update(state, action, reward, next_state, next_state_possible_actions, done)
+			state = next_state
+			
+			if done == True:    
+				env.reset_state()
+				state = env.get_state()
+				continue
+		return
+
+	def get_path(self, env):
+		env.reset_state()
+		path = []
+		done = False
+		while(not done):
+			path.append(env.position)
+			state = env.get_state()
+			possible_actions = env.get_possible_actions()
+			action = self.get_best_action(state, possible_actions)
+			next_state, reward, done = env.step(action)
+		return path
 
 # ------------------------------------------------------------------------------------------
 # ---------------------------------- Q-Learning Agent --------------------------------------
