@@ -29,6 +29,11 @@
     }
   },
   "respository_url": "https://github.com/wynged/hyper-duct",
-  "returns": {},
+    "returns": {
+        "number_of_spaces": {
+            "description": "The number of spaces i the building.",
+            "type": "number"
+        }
+    },
   "version": "0.1.0"
 }
