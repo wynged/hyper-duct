@@ -1,20 +1,15 @@
-import sys
-sys.path.insert(0, '.\pathing')
-
 import MakeDuct
 import MakeSpaceTower
-import pathing.minSpanningPath
+import minSpanningPath
 import space_cfm_calc
 import math
 import heatmap
+from random import randint
 from hypar import glTF
 from aecSpace.aecColor import aecColor
-from aecSpace.aecFloor import aecFloor
 from aecSpace.aecShaper import aecShaper
 from aecSpace.aecPoint import aecPoint
 from aecSpace.aecSpace import aecSpace
-from aecSpace.aecSpaceGroup import aecSpaceGroup
-from aecSpace.aecSpacer import aecSpacer
 
 def makeTowerDucts(stories: int = 5, mostRooms: int = 4, routing = 0, useColor=0):
     model = glTF()
@@ -35,7 +30,7 @@ def makeTowerDucts(stories: int = 5, mostRooms: int = 4, routing = 0, useColor=0
     colorYellow = model.add_material(1.0, 0.733, 0.0, alpha, reflect, "Yellow")
 
     loads = space_cfm_calc.Space_CFM_Calc(spaces)
-    ductSpecs = pathing.minSpanningPath.GetDuctPathFromBldg(loads)
+    ductSpecs = minSpanningPath.GetDuctPathFromBldg(loads)
     mini = min([x["cfm"] for x in ductSpecs])
     maxi = max([x["cfm"] for x in ductSpecs])
     numcolors = 12
@@ -92,7 +87,7 @@ def makeTowerDucts(stories: int = 5, mostRooms: int = 4, routing = 0, useColor=0
             model.add_triangle_mesh(ductMesh.vertices, ductMesh.normals, ductMesh.indices, colorGray)   
 
     return {"model": model.save_base64(), 'computed':{'Number of Spaces':number_of_spaces}}   
-   # model.save_glb('model.glb')
+#    model.save_glb('model.glb')
 
 # makeTowerDucts(stories = randint(5, 30), mostRooms = randint(2, 8), routing = randint(0, 1))
 
