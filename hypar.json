@@ -1,0 +1,30 @@
+{
+  "function": "MakeTowerDucts.makeTowerDucts",
+  "runtime": "python3.6",
+  "parameters":{
+    "stories": {
+      "description": "Building stories.",
+      "max": 30,
+      "min": 5,
+      "step": 5,
+      "type": "number"    
+    },
+    "mostRooms": {
+      "description": "Upper limit of rooms on one side of corridor.",
+      "max": 8,
+      "min": 2,
+      "step": 1,
+      "type": "number"    
+    },
+    "routing": {
+      "description": "Routing methods.",
+      "max": 1,
+      "min": 0,
+      "step": 1,
+      "type": "number"    
+    }
+  },
+  "returns": {
+
+  }
+}
