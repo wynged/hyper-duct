@@ -72,7 +72,7 @@ def makeFloor(offset: float = 0.0,
         shell.rooms.setHeight(10000)
     return shell
 
-def makeSpaceTower():
+def makeSpaceTower(stories: int = 5, mostRooms: int = 4):
     x = 0
     y = 0
     z = 0
@@ -128,7 +128,7 @@ def makeSpaceTower():
         shaper = aecShaper()
         core.boundary = shaper.makeBox(point, 10000, 10000)
         core.height = ((stories - 1) * 3500) + 15000
-        core.color = aecColor.gray
+        core.color = aecColor.granite
         core.name = 'Shaft'
         spaces += [core]
         return spaces

@@ -15,8 +15,8 @@ from aecSpace.aecSpaceGroup import aecSpaceGroup
 from aecSpace.aecSpacer import aecSpacer
 from aecSpace.aecSpaceDrawOCC import aecSpaceDrawOCC
 
-def makeTowerDucts():
-    spaces = MakeSpaceTower.makeSpaceTower()
+def makeTowerDucts(stories: int = 5, mostRooms: int = 4, routing = 0):
+    spaces = MakeSpaceTower.makeSpaceTower(stories, mostRooms)
     # print(spaces)
     loads = space_cfm_calc.Space_CFM_Calc(spaces)
     # print(loads[0])
@@ -34,6 +34,7 @@ def makeTowerDucts():
     colorAqua = model.add_material(0.302, 0.722, 0.392, 0.3, 0.2, "Aqua")
     colorBlue = model.add_material(0.0, 0.631, 0.945, 0.3, 0.2, "Blue")
     colorCyan = model.add_material(0.275, 0.941, 0.941, 0.3, 0.2, "Cyan")
+    colorGranite = model.add_material(0.235, 0.235, 0.235, 0.3, 0.2, "Gray")
     colorGray = model.add_material(0.5, 0.5, 0.5, 1.0, 0.2, "Gray")
     colorGreen = model.add_material(0.486, 0.733, 0.0, 0.3, 0.2, "Green")
     colorOrange = model.add_material(0.964, 0.325, 0.078, 0.3, 0.2, "Orange")
@@ -47,6 +48,7 @@ def makeTowerDucts():
         if space.color.color == aecColor.blue: color = colorBlue
         if space.color.color == aecColor.cyan: color = colorCyan
         if space.color.color == aecColor.gray: color = colorGray 
+        if space.color.color == aecColor.granite: color = colorGranite
         if space.color.color == aecColor.green: color = colorGreen
         if space.color.color == aecColor.orange: color = colorOrange
         if space.color.color == aecColor.sand: color = colorSand
@@ -60,7 +62,7 @@ def makeTowerDucts():
 #   return {"model": model.save_base64(), 'computed':{'floors':levels, 'area':area}}   
     model.save_glb('model.glb')
 
-makeTowerDucts()
+makeTowerDucts(stories = randint(5, 30), mostRooms = randint(2, 8), routing = randint(0, 1))
 #spaces = makeTowerDucts()
 #spaceDrawer = aecSpaceDrawOCC()
 #spaceDrawer.draw3D(spaces, displaySize = (1600, 900), update = True)
