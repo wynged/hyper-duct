@@ -10,15 +10,15 @@ from aecSpace.aecSpacer import aecSpacer
 from aecSpace.aecSpaceDrawOCC import aecSpaceDrawOCC
 
 colors = \
-    [
-        aecColor.aqua,     
-        aecColor.blue,
-        aecColor.cyan,
-        aecColor.orange,
-        aecColor.sand,
-        aecColor.teal,
-        aecColor.yellow,
-    ]
+[
+    aecColor.aqua,     
+    aecColor.blue,
+    aecColor.cyan,
+    aecColor.orange,
+    aecColor.sand,
+    aecColor.teal,
+    aecColor.yellow,
+]
 
 def makeFloor(offset: float = 0.0,
               rotation: float = 0.0,
