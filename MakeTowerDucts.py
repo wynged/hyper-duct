@@ -31,7 +31,8 @@ def makeTowerDucts():
     colorGray = model.add_material(0.5, 0.5, 0.5, 0.1, 0.2, "Gray")
     colorGreen = model.add_material(0.486, 0.733, 0.0, 0.1, 0.2, "Green")
     colorOrange = model.add_material(0.964, 0.325, 0.078, 0.1, 0.2, "Orange")
-    colorSand = model.add_material(0.75, 0.07, 1.0, 0.1, 0.2, "Sand")    
+    colorSand = model.add_material(1.0, 0.843, 0.376, 0.1, 0.2, "Sand") 
+    colorTeal = model.add_material(0.0, 0.502, 0.502, 0.1, 0.2, "Teal")  
     colorYellow = model.add_material(1.0, 0.733, 0.0, 0.1, 0.2, "Yellow")
     for space in spaces:
         spaceMesh = space.mesh_graphic
