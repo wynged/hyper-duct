@@ -11,6 +11,8 @@ from aecSpace.aecSpaceGroup import aecSpaceGroup
 from aecSpace.aecSpaceDrawOCC import aecSpaceDrawOCC
 import itertools
 
+from pathing.diffuserlayout import difflayout
+
 #creating tower with multiple spaces per floors
 #spaces = MakeSpaceTower.makeSpaceTower()
 def Space_CFM_Calc(spaces):
