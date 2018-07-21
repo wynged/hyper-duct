@@ -32,7 +32,7 @@ def AddCFMToRoute(lvl, span):
 
     return span
 
-def AddSizesToRoute(span):
+def AddSizesToRoute(span, zOffset):
     for e in span.edges:
         # print(e)
         edge = span[e[0]][e[1]]
@@ -43,7 +43,11 @@ def AddSizesToRoute(span):
             ed = 1
         h = math.floor(ed)
         w = math.ceil(ductSizing.calcSecondDimension(ed, h))
-        edge["width"] =  w * 25.4
+        print("before: ", edge["start"], ", ", edge["end"])
+        edge["start"][2] = edge["start"][2] + (zOffset)*25.4
+        edge["end"][2] = edge["end"][2] + (zOffset)*25.4
+        print("after: ", edge["start"], ", ", edge["end"])
+        edge["width"] =  w  * 25.4
         edge["height"] =  h * 25.4
 
     return span
