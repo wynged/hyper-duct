@@ -2,12 +2,14 @@ import environment
 import agent
 
 # ------------------------------------ environment 1 -----------------------------------------
+'''
 gridH, gridW = 4, 4
 start_pos = None
 end_positions = [(0, 3), (1, 3)]
 end_rewards = [10.0, -60.0]
 blocked_positions = [(1, 1), (2, 1)]
 default_reward= -0.2
+'''
 # ------------------------------------ environment 2 -----------------------------------------
 '''
 gridH, gridW = 8, 4
@@ -27,14 +29,14 @@ blocked_positions = [(i, 1) for i in range(1, 7)]+ [(1, i) for i in range(1, 8)]
 default_reward= -0.5
 '''
 # ------------------------------------ environment 4 -----------------------------------------
-'''
+
 gridH, gridW = 9, 7
 start_pos = None
 end_positions = [(0, 3), (2, 4), (6, 2)]
 end_rewards = [20.0, -50.0, -50.0]
 blocked_positions = [(2, i) for i in range(3)] + [(6, i) for i in range(4, 7)]
 default_reward = -0.1
-'''
+
 # --------------------------------------------------------------------------------------------
 
 env = environment.Environment(gridH, gridW, end_positions, end_rewards, blocked_positions, start_pos, default_reward)
@@ -51,8 +53,10 @@ a = agent.QLearningAgent(alpha, epsilon, discount, action_space, state_space)
 state = env.get_state()
 #print(state)
 
-while(True):
-
+iteration = 0
+maxIterations = 1000
+while(iteration < maxIterations):
+	iteration +=1
 	possible_actions = env.get_possible_actions()
 	action = a.get_action(state, possible_actions)
 	next_state, reward, done = env.step(action)
