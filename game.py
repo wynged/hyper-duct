@@ -42,7 +42,7 @@ default_reward = -0.1
 env = environment.Environment(gridH, gridW, end_positions, end_rewards, blocked_positions, start_pos, default_reward)
 
 alpha = 0.2
-epsilon = 0.5
+epsilon = 0.2
 discount = 0.99
 action_space = env.action_space
 state_space = env.state_space
@@ -72,4 +72,5 @@ while(iteration < maxIterations):
 		print(a.qvalues)
 
 		state = env.get_state()
+		
 		continue
