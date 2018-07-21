@@ -34,7 +34,7 @@ def makeTowerDucts():
     colorAqua = model.add_material(0.302, 0.722, 0.392, 0.3, 0.2, "Aqua")
     colorBlue = model.add_material(0.0, 0.631, 0.945, 0.3, 0.2, "Blue")
     colorCyan = model.add_material(0.275, 0.941, 0.941, 0.3, 0.2, "Cyan")
-    colorGray = model.add_material(0.5, 0.5, 0.5, 0.3, 0.2, "Gray")
+    colorGray = model.add_material(0.5, 0.5, 0.5, 1.0, 0.2, "Gray")
     colorGreen = model.add_material(0.486, 0.733, 0.0, 0.3, 0.2, "Green")
     colorOrange = model.add_material(0.964, 0.325, 0.078, 0.3, 0.2, "Orange")
     colorSand = model.add_material(1.0, 0.843, 0.376, 0.3, 0.2, "Sand") 
@@ -55,11 +55,7 @@ def makeTowerDucts():
         model.add_triangle_mesh(spaceMesh.vertices, spaceMesh.normals, spaceMesh.indices, color)   
     for duct in ducts:
         ductMesh = duct.mesh_graphic
-        colorIndex = randint(0,3)
-        if colorIndex == 0: color = colorBlue
-        if colorIndex == 1: color = colorOrange
-        if colorIndex == 2: color = colorGray
-        if colorIndex == 3: color = colorYellow      
+        color = colorGray  
         model.add_triangle_mesh(ductMesh.vertices, ductMesh.normals, ductMesh.indices, color)   
 #   return {"model": model.save_base64(), 'computed':{'floors':levels, 'area':area}}   
     model.save_glb('model.glb')
