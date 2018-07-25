@@ -75,6 +75,8 @@ def boiler(area):
     return boilerhp
 
 def exterior_load(area_ex_walls):
+    area_ex_walls = 15000 #for testing
+    # area_ex_walls = aecFloor(int or ex)*wall area*aecFloor(% of wall)
     R_Value = 10
     Ex_Temp = 5
     In_Temp = 72
@@ -84,7 +86,7 @@ def exterior_load(area_ex_walls):
 
 if __name__ == "__main__":
     air(spaces, ductSpecs)
-    area = 15000
+
     boiler(area)
     totalair = 32640
     chiller(totalair)
