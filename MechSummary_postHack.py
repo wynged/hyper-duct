@@ -83,10 +83,28 @@ def exterior_load(area_ex_walls):
     Q_heating = (1/R_Value)*area_ex_walls*(In_Temp-Ex_Temp)
     print("Heating Envelope Load (BTU/hr): ", str(Q_heating),)
 
+#future functions
+'''
+Roof Load Function
+People,equipment load? Dependent on room type
+Place lighting fixtures and lighting load? Separate function? Run honeybee for daylight. Blender for 
+
+structural analysis
+-what open source softwares are there?
+
+plumbing?
+
+
+
+
+
+
+
+'''
 
 if __name__ == "__main__":
     air(spaces, ductSpecs)
-
+    area = 15000
     boiler(area)
     totalair = 32640
     chiller(totalair)
